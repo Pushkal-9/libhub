@@ -17,7 +17,7 @@ public class WebConfig {
                         .allowedOrigins("http://localhost:3000") // The origin of your React app
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Whatever methods you want to allow
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(false);
             }
         };
     }
