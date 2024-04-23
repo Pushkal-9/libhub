@@ -3,9 +3,11 @@ package com.project.libhub.controllers;
 import com.project.libhub.models.Book;
 import com.project.libhub.services.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/books")
@@ -30,9 +32,8 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable int id, @RequestBody Book book) {
-        book.setBibNumber(id);
-        return bookService.updateBook(book);
+    public int updateBook(@PathVariable int id, @RequestBody Book book) {
+        return bookService.updateBook(id,book);
     }
 
     @DeleteMapping("/{id}")
@@ -43,6 +44,12 @@ public class BookController {
     @GetMapping("/search")
     public List<Book> searchBooks(@RequestParam("keyword") String keyword) {
         return bookService.searchBooksByKeyword(keyword);
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<Map<String, Object>>> getPopularBooks() {
+        List<Map<String, Object>> popularBooks = bookService.getPopularBooksInLast30Days();
+        return ResponseEntity.ok(popularBooks);
     }
 }
 
